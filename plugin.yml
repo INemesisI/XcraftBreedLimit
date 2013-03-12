@@ -1,0 +1,16 @@
+name: XcraftBreedLimit
+main: de.xcraft.inemesisi.breedlimit.BreedLimit
+version: 1.0
+author: INemesisI
+
+commands:
+  bl:
+    usage: /bl reload
+    
+permissions:
+    breedlimit.reload:
+        description: Access reload command
+        default: op
+    breedlimit.exempt:
+        description: Access to ignore the breedlimit
+        default: op

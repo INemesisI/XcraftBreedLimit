@@ -1,0 +1,6 @@
+#XcraftBreedLimit config
+ChunkRadius: 1
+FailMsg: "&cDas Tier zittert vor Nervositaet. Es fuehlt sich zu bedraengt zum Zuechten!"
+WolfLimit: 5
+OcelotLimit: 5
+BreedingCap: 75
