@@ -15,7 +15,7 @@ import de.xcraft.INemesisI.Utils.Manager.XcraftPluginManager;
 public class PluginManager extends XcraftPluginManager {
 	public final List<String> scan = new ArrayList<String>();
 	private final Map<String, List<EntityType>> licences = new HashMap<String, List<EntityType>>();
-	private final Map<EntityType, Integer> prices = new HashMap<EntityType, Integer>();
+	//private final Map<EntityType, Integer> prices = new HashMap<EntityType, Integer>();
 
 	public PluginManager(XcraftBreedLimit plugin) {
 		super(plugin);

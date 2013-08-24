@@ -13,17 +13,6 @@ import de.xcraft.INemesisI.Utils.XcraftPlugin;
 public class XcraftBreedLimit extends XcraftPlugin {
 	public Economy economy;
 
-	@Override
-	public void onDisable() {
-		super.onDisable();
-	}
-
-	@Override
-	public void onEnable() {
-		super.onEnable();
-		setupEconomy();
-	}
-
 	private boolean setupEconomy() {
 		RegisteredServiceProvider<Economy> economyProvider = this.getServer().getServicesManager()
 				.getRegistration(net.milkbowl.vault.economy.Economy.class);
@@ -39,6 +28,7 @@ public class XcraftBreedLimit extends XcraftPlugin {
 		this.configManager = new ConfigManager(this);
 		this.eventListener = new EventListener(this);
 		this.commandManager = new CommandManager(this);
+		this.setupEconomy();
 		configManager.load();
 	}
 }

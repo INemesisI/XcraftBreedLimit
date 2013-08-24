@@ -19,11 +19,11 @@ public class TpCommand extends XcraftCommand {
 	public boolean execute(XcraftPluginManager manager, CommandSender sender, String[] args) {
 		if (!(sender instanceof Player))
 			return true;
-		if (!args[1].matches("\\d*"))
+		if (!args[0].matches("\\d*"))
 			return false;
 		PluginManager pmanager = (PluginManager) manager;
 		Player player = (Player) sender;
-		int entry = Integer.parseInt(args[1]) - 1;
+		int entry = Integer.parseInt(args[0]) - 1;
 		if (entry < 0 || pmanager.scan.size() <= entry) {
 			manager.plugin.messenger.sendInfo(player, ChatColor.RED + "This Entry does not exist!", true);
 			return true;

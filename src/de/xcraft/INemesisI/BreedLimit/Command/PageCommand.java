@@ -18,7 +18,7 @@ public class PageCommand extends XcraftCommand {
 
 		if (!(sender instanceof Player))
 			return true;
-		if (!args[1].matches("\\d*"))
+		if (!args[0].matches("\\d*"))
 			return false;
 		Player player = (Player) sender;
 		PluginManager pmanager = (PluginManager) manager;

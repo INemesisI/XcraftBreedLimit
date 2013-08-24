@@ -13,16 +13,22 @@ import de.xcraft.INemesisI.Utils.Manager.XcraftPluginManager;
 public class ScanCommand extends XcraftCommand {
 
 	public ScanCommand() {
-		super("bl", "scan", "s.*", "<limit>", "Scans for a chunk with <limit> entities", "XcraftBreedLimit.Scan");
+		super("bl", "scan", "s.*", "<Limit> [Type]",
+				"Scans for a chunk with <limit> entities",
+				"XcraftBreedLimit.Scan");
 	}
 
 	@Override
 	public boolean execute(XcraftPluginManager manager, CommandSender sender, String[] args) {
 		if (!(sender instanceof Player))
 			return true;
-		if (!args[1].matches("\\d*"))
+		if (!args[0].matches("\\d*"))
 			return false;
-		int min = Integer.parseInt(args[1]);
+		int min = Integer.parseInt(args[0]);
+		EntityType type = null;
+		if (args.length > 1)
+			type = EntityType.valueOf(args[1]);
+		boolean etype = type != null;
 		PluginManager pmanager = (PluginManager) manager;
 		Player player = (Player) sender;
 		pmanager.scan.clear();
@@ -31,11 +37,17 @@ public class ScanCommand extends XcraftCommand {
 			Entity[] list = chunk.getEntities();
 			for (int i = 0; i < list.length; i++) {
 				Entity e = list[i];
-				if (e.getType() != EntityType.DROPPED_ITEM && e.getType() != EntityType.ITEM_FRAME)
+				if (etype) {
+					if (e.getType().equals(type))
+						a++;
+				} else if (e.getType() != EntityType.DROPPED_ITEM
+						&& e.getType() != EntityType.ITEM_FRAME)
 					a++;
+
 			}
 			if (a > min) {
-				pmanager.scan.add("Chunk(" + chunk.getX() + ", " + chunk.getZ() + "): " + a + " Entities");
+				pmanager.scan.add("Chunk(" + chunk.getX() + ", " + chunk.getZ()
+						+ "): " + a + " Entities");
 			}
 		}
 		pmanager.showPage(player, 1);

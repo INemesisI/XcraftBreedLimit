@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -56,16 +57,21 @@ public class EventListener extends XcraftEventListener {
 		list.add(Material.GOLDEN_CARROT);
 		breedItemList.put(EntityType.HORSE, new ArrayList<Material>(list));
 	}
+
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
 		if (event.getPlayer().hasPermission("breedlimit.exempt"))
-			;//return;
+			;// return;
 		if (event.isCancelled())
 			return;
 		Material item = event.getPlayer().getItemInHand().getType();
 		Entity entity = event.getRightClicked();
-		if (breedItemList.containsKey(entity.getType()) && breedItemList.get(entity.getType()).contains(item)) {
+		if (breedItemList.containsKey(entity.getType())
+				&& breedItemList.get(entity.getType()).contains(item)) {
+			if (entity instanceof Tameable && !((Tameable) entity).isTamed())
+				return;
 			event.setCancelled(checkBreeding(entity, event.getPlayer()));
+			System.out.println(event.isCancelled());
 		}
 	}
 
@@ -75,52 +81,41 @@ public class EventListener extends XcraftEventListener {
 	}
 
 	public boolean checkBreeding(Entity entity, Player player) {
-		Map<String, Integer> count = new HashMap<String, Integer>();
-		for (String key : cManager.limits.keySet()) {
-			if ((cManager.groups.containsKey(key))) {
-					if(cManager.groups.get(key).contains(entity.getType()) && !count.containsKey(key)) {
-						count.put(key, 0);	
-					}
-			} else if (EntityType.valueOf(key).equals(entity.getType())) {
+		//setup count
+		Map<EntityType, Integer> count = new HashMap<EntityType, Integer>();
+		for (EntityType key : cManager.limits.keySet()) {
+			if (key.equals(entity.getType())) {
 				count.put(key, 0);
 			}
 		}
+		// count all entities
 		int r = cManager.radius;
-		List<EntityType> entities = new ArrayList<EntityType>();
 		Chunk c = entity.getLocation().getChunk();
 		for (int x = c.getX()-r ; x < c.getX()+r; x++) {
 			for (int z = c.getZ()-r ; z < c.getZ()+r; z++) {
-				for (Entity e : c.getWorld().getChunkAt(x, z).getEntities())
-					entities.add(e.getType());
-			}
-		}
-		for (EntityType e : entities) {
-			for (String key : count.keySet()) {
-				if (!cManager.groups.keySet().contains(key)) {
-					if (EntityType.valueOf(key).equals(e))
-						count.put(key, count.get(key) + 1);
-				} else {
-					if (cManager.groups.get(key).contains(e)) {
-						count.put(key, count.get(key) + 1);
-					}
+				for (Entity e : c.getWorld().getChunkAt(x, z).getEntities()) {
+					EntityType t = e.getType();
+					if (count.containsKey(t)) {
+						count.put(t, count.get(t));
+					}					
 				}
 			}
 		}
-		for (String key : count.keySet()) {
+		// check if we go over the limit
+		for (EntityType key : count.keySet()) {
 			if (count.get(key) > cManager.limits.get(key)) {
 				if (player != null) {
 					PluginManager pManager = (PluginManager) plugin.pluginManager;
 					if (pManager.hasLicence(player.getName(), entity.getType())) {
 						pManager.removeLicence(player.getName(), entity.getType());
 						// Messenger.sendInfo(player, cManager.messages.get(entity), false);
-						return true;
+						return false;
 					}
-					plugin.messenger.sendInfo(player, cManager.messages.get(key), false);
+					plugin.messenger.sendInfo(player, cManager.getMessage(key), false);
 				}
-				return false;
+				return true;
 			}
 		}
 		return true;
 	}
-
 }

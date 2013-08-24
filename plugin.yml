@@ -1,6 +1,6 @@
 name: XcraftBreedLimit
 main: de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit
-version: 1.1
+version: 1.12
 author: INemesisI
 
 commands:

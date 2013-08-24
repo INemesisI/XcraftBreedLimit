@@ -1,8 +1,6 @@
 package de.xcraft.INemesisI.BreedLimit.Manager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.bukkit.configuration.ConfigurationSection;
@@ -17,10 +15,9 @@ public class ConfigManager extends XcraftConfigManager {
 	private FileConfiguration config;
 
 	public int radius;
-	public final Map<String, Integer> limits = new HashMap<String, Integer>();
-	public final Map<String, List<EntityType>> groups = new HashMap<String, List<EntityType>>();
-	public final Map<String, Integer> licences = new HashMap<String, Integer>();
-	public final Map<String, String> messages = new HashMap<String, String>();
+	public final Map<EntityType, Integer> limits = new HashMap<EntityType, Integer>();
+	public final Map<EntityType, Integer> licences = new HashMap<EntityType, Integer>();
+	private final Map<EntityType, String> messages = new HashMap<EntityType, String>();
 
 	public ConfigManager(XcraftBreedLimit plugin) {
 		super(plugin);
@@ -29,31 +26,34 @@ public class ConfigManager extends XcraftConfigManager {
 	@Override
 	public void load() {
 		config = plugin.getConfig();
-		ConfigurationSection cs = config.getConfigurationSection("Breeding.Groups");
+		ConfigurationSection cs = config.getConfigurationSection("Breeding.Limits");
 		for (String key : cs.getKeys(false)) {
-			List<EntityType> list = new ArrayList<EntityType>();
-			for (String type : cs.getString(key).split(", ")) {
-				list.add(EntityType.valueOf(type));
-			}
-			groups.put(key, list);
-		}
-		cs = config.getConfigurationSection("Breeding.Limits");
-		for (String key : cs.getKeys(false)) {
-			if (groups.containsKey(key) || EntityType.valueOf(key) != null)
-			limits.put(key, cs.getInt(key));
+			if (EntityType.valueOf(key) != null)
+				limits.put(EntityType.valueOf(key), cs.getInt(key));
 		}
 		cs = config.getConfigurationSection("Breeding.Licence");
 		for (String key : cs.getKeys(false)) {
-			if (groups.containsKey(key) || EntityType.valueOf(key) != null)
-			licences.put(key, cs.getInt(key));
+			if (EntityType.valueOf(key) != null)
+				licences.put(EntityType.valueOf(key), cs.getInt(key));
 		}
 		cs = config.getConfigurationSection("Breeding.Message");
 		for (String key : cs.getKeys(false)) {
-			messages.put(key, cs.getString(key));
+			if (key.equals("default") || EntityType.valueOf(key) != null) {
+				EntityType type = key.equals("default") ? EntityType.UNKNOWN : EntityType.valueOf(key);
+				messages.put(type, cs.getString(key));
+			}
 		}
 		this.radius = config.getInt("Bredding.Radius", 2);
 	}
+
 	@Override
 	public void save() {
+	}
+
+	public String getMessage(EntityType type) {
+		if (messages.containsKey(type))
+			return messages.get(type);
+		else
+			return messages.get("default");
 	}
 }
