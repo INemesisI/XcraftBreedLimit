@@ -1,11 +1,13 @@
 name: XcraftBreedLimit
-main: de.xcraft.inemesisi.breedlimit.BreedLimit
-version: 1.0
+main: de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit
+version: 1.1
 author: INemesisI
 
 commands:
   bl:
     usage: /bl reload
+  licence: 
+    usage: /licence buy/list/give
     
 permissions:
     breedlimit.reload:
