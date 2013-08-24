@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import de.xcraft.INemesisI.BreedLimit.Manager.PluginManager;
 import de.xcraft.INemesisI.Utils.Command.XcraftCommand;
 import de.xcraft.INemesisI.Utils.Manager.XcraftPluginManager;
-import de.xcraft.INemesisI.Utils.Message.Messenger;
 
 public class TpCommand extends XcraftCommand {
 
@@ -26,7 +25,7 @@ public class TpCommand extends XcraftCommand {
 		Player player = (Player) sender;
 		int entry = Integer.parseInt(args[1]) - 1;
 		if (entry < 0 || pmanager.scan.size() <= entry) {
-			Messenger.sendInfo(player, ChatColor.RED + "This Entry does not exist!", true);
+			manager.plugin.messenger.sendInfo(player, ChatColor.RED + "This Entry does not exist!", true);
 			return true;
 		}
 		String[] split = pmanager.scan.get(entry).split(":")[0].replace("Chunk(", "").replace(")", "").split(", ");

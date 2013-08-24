@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 
 import de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit;
 import de.xcraft.INemesisI.Utils.Manager.XcraftPluginManager;
-import de.xcraft.INemesisI.Utils.Message.Messenger;
 
 public class PluginManager extends XcraftPluginManager {
 	public final List<String> scan = new ArrayList<String>();
@@ -40,12 +39,12 @@ public class PluginManager extends XcraftPluginManager {
 	}
 
 	public void showPage(Player player, int page) {
-		Messenger.sendInfo(player, ChatColor.YELLOW + "Scan Data page" + ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + page + ChatColor.DARK_GRAY
+		plugin.messenger.sendInfo(player, ChatColor.YELLOW + "Scan Data page" + ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + page + ChatColor.DARK_GRAY
 				+ "/" + (scan.size() / 10 + 1) + "]", true);
 		page = page - 1;
 		for (int i = (page * 10); i < (page * 10) + 10; i++) {
 			if (i < scan.size()) {
-				Messenger.sendInfo(player, ChatColor.GOLD + "" + (i + 1) + ChatColor.WHITE + ": " + ChatColor.AQUA + scan.get(i), true);
+				plugin.messenger.sendInfo(player, ChatColor.GOLD + "" + (i + 1) + ChatColor.WHITE + ": " + ChatColor.AQUA + scan.get(i), true);
 			} else
 				break;
 		}

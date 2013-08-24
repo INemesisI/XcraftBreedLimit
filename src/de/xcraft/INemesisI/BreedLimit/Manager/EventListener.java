@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit;
 import de.xcraft.INemesisI.Utils.XcraftEventListener;
-import de.xcraft.INemesisI.Utils.Message.Messenger;
 
 public class EventListener extends XcraftEventListener {
 
@@ -116,7 +115,7 @@ public class EventListener extends XcraftEventListener {
 						// Messenger.sendInfo(player, cManager.messages.get(entity), false);
 						return true;
 					}
-					Messenger.sendInfo(player, cManager.messages.get(key), false);
+					plugin.messenger.sendInfo(player, cManager.messages.get(key), false);
 				}
 				return false;
 			}
