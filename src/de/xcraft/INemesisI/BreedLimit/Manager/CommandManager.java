@@ -6,8 +6,8 @@ import de.xcraft.INemesisI.BreedLimit.Command.ListLicencesCommand;
 import de.xcraft.INemesisI.BreedLimit.Command.PageCommand;
 import de.xcraft.INemesisI.BreedLimit.Command.ScanCommand;
 import de.xcraft.INemesisI.BreedLimit.Command.TpCommand;
-import de.xcraft.INemesisI.Utils.XcraftPlugin;
-import de.xcraft.INemesisI.Utils.Manager.XcraftCommandManager;
+import de.xcraft.INemesisI.Library.XcraftPlugin;
+import de.xcraft.INemesisI.Library.Manager.XcraftCommandManager;
 
 public class CommandManager extends XcraftCommandManager {
 
@@ -17,7 +17,7 @@ public class CommandManager extends XcraftCommandManager {
 
 	@Override
 	protected void registerCommands() {
-		registerBukkitCommand("bl");
+		registerBukkitCommand("breedlimit");
 		registerBukkitCommand("licence");
 		
 		registerCommand(new ScanCommand());

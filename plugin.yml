@@ -1,18 +1,21 @@
 name: XcraftBreedLimit
-main: de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit
-version: 1.12
+version: 1.2.3
 author: INemesisI
 
+main: de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit
+load: POSTWORLD
+softdepend: [Vault]
+
 commands:
-  bl:
-    usage: /bl reload
+  breedlimit:
+    aliases: bl
   licence: 
-    usage: /licence buy/list/give
+    aliases: l
     
 permissions:
-    breedlimit.reload:
-        description: Access reload command
+    XcraftBreedLimit.Scan:
         default: op
-    breedlimit.exempt:
-        description: Access to ignore the breedlimit
+    XcraftBreeLimit.Licence:
+        default: op
+    XcraftBreedLimit.Exempt:
         default: op

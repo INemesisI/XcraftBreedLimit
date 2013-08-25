@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 
 import de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit;
-import de.xcraft.INemesisI.Utils.Manager.XcraftConfigManager;
+import de.xcraft.INemesisI.Library.Manager.XcraftConfigManager;
 
 public class ConfigManager extends XcraftConfigManager {
 

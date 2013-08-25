@@ -7,15 +7,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import de.xcraft.INemesisI.BreedLimit.Manager.PluginManager;
-import de.xcraft.INemesisI.Utils.Command.XcraftCommand;
-import de.xcraft.INemesisI.Utils.Manager.XcraftPluginManager;
+import de.xcraft.INemesisI.Library.Command.XcraftCommand;
+import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 
 public class ScanCommand extends XcraftCommand {
 
 	public ScanCommand() {
-		super("bl", "scan", "s.*", "<Limit> [Type]",
-				"Scans for a chunk with <limit> entities",
-				"XcraftBreedLimit.Scan");
+		super("breedlimit", "scan", "s.*", "<Limit> [Type]",
+				"Scans for chunks with <limit> entities", "XcraftBreedLimit.Scan");
 	}
 
 	@Override
@@ -46,11 +45,11 @@ public class ScanCommand extends XcraftCommand {
 
 			}
 			if (a > min) {
-				pmanager.scan.add("Chunk(" + chunk.getX() + ", " + chunk.getZ()
-						+ "): " + a + " Entities");
+				pmanager.scan.add("Chunk(" + chunk.getX() + ", " + chunk.getZ() + "): " + a
+						+ " Entities");
 			}
 		}
 		pmanager.showPage(player, 1);
-		return false;
+		return true;
 	}
 }

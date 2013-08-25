@@ -10,7 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit;
-import de.xcraft.INemesisI.Utils.Manager.XcraftPluginManager;
+import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 
 public class PluginManager extends XcraftPluginManager {
 	public final List<String> scan = new ArrayList<String>();

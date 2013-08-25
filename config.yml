@@ -1,20 +1,19 @@
 #XcraftBreedLimit config
 Breeding:
-    Radius: 4
-    Groups:
-        ANIMALS: CHICKEN, COW, PIG, SHEEP
+    Radius: 2
     Limits:
-        ANIMALS: 50
-        OCELOT: 3
-        WOLF: 3
+        SHEEP: 100
+        COW: 30
+        CHICKEN: 30
+        PIG: 30
+        OCELOT: 0
+        WOLF: 0
         HORSE: 0
     Licence:
         OCELOT: 500
         WOLF: 500
         HORSE: 2000
     Message:
-        ANIMALS: '&cDas Tier zittert vor Nervositaet. Es fuehlt sich zu bedraengt zum Zuechten!'
-        OCELOT: '&cDas Tier zittert vor Nervositaet. Es fuehlt sich zu bedraengt zum Zuechten!'
-        WOLF: '&cDas Tier zittert vor Nervositaet. Es fuehlt sich zu bedraengt zum Zuechten!'
-        HORSE: '&cUm ein Pferd zu zuechten muss eine Lizenz vom Server erworben werden! (coming soon)'
+        default: '&cDas Tier zittert vor Nervositaet. Es fuehlt sich zu bedraengt zum Zuechten!'
+        HORSE: '&cUm ein Pferd zu zuechten muss eine Lizenz vom Server erworben werden! (coming soon!)'
         

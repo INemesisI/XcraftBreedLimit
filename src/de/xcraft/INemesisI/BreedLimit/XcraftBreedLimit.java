@@ -8,7 +8,7 @@ import de.xcraft.INemesisI.BreedLimit.Manager.CommandManager;
 import de.xcraft.INemesisI.BreedLimit.Manager.ConfigManager;
 import de.xcraft.INemesisI.BreedLimit.Manager.EventListener;
 import de.xcraft.INemesisI.BreedLimit.Manager.PluginManager;
-import de.xcraft.INemesisI.Utils.XcraftPlugin;
+import de.xcraft.INemesisI.Library.XcraftPlugin;
 
 public class XcraftBreedLimit extends XcraftPlugin {
 	public Economy economy;

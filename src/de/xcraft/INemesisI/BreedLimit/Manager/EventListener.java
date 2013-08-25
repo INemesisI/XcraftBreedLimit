@@ -17,7 +17,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit;
-import de.xcraft.INemesisI.Utils.XcraftEventListener;
+import de.xcraft.INemesisI.Library.XcraftEventListener;
 
 public class EventListener extends XcraftEventListener {
 
