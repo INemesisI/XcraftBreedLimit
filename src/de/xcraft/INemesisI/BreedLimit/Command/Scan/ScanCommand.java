@@ -1,4 +1,4 @@
-package de.xcraft.INemesisI.BreedLimit.Command;
+package de.xcraft.INemesisI.BreedLimit.Command.Scan;
 
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
@@ -13,8 +13,7 @@ import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 public class ScanCommand extends XcraftCommand {
 
 	public ScanCommand() {
-		super("breedlimit", "scan", "s.*", "<Limit> [Type]",
-				"Scans for chunks with <limit> entities", "XcraftBreedLimit.Scan");
+		super("breedlimit", "scan", "s.*", "<#> [TYPE] [AREA]", "Scans for chunks with # entities", "XcraftBreedLimit.Scan");
 	}
 
 	@Override
@@ -25,28 +24,45 @@ public class ScanCommand extends XcraftCommand {
 			return false;
 		int min = Integer.parseInt(args[0]);
 		EntityType type = null;
+		int area = -1;
 		if (args.length > 1)
-			type = EntityType.valueOf(args[1]);
+			if (args[1].matches("\\d*")) {
+				area = Integer.parseInt(args[2]);
+			} else {
+				type = EntityType.valueOf(args[1]);
+			}
+		if (args.length > 2) {
+			if (!args[2].matches("\\d*"))
+				return false;
+			area = Integer.parseInt(args[2]);
+		}
 		boolean etype = type != null;
 		PluginManager pmanager = (PluginManager) manager;
 		Player player = (Player) sender;
 		pmanager.scan.clear();
+		Chunk pc = player.getLocation().getChunk();
 		for (Chunk chunk : player.getWorld().getLoadedChunks()) {
 			int a = 0;
+			if (area != -1) {
+				if (chunk.getX() < pc.getX() - area || chunk.getX() > pc.getX() + area || chunk.getZ() < pc.getZ() - area
+						|| chunk.getZ() > pc.getZ() + area) {
+					continue;
+				}
+			}
 			Entity[] list = chunk.getEntities();
 			for (int i = 0; i < list.length; i++) {
 				Entity e = list[i];
 				if (etype) {
-					if (e.getType().equals(type))
+					if (e.getType().equals(type)) {
 						a++;
-				} else if (e.getType() != EntityType.DROPPED_ITEM
-						&& e.getType() != EntityType.ITEM_FRAME)
+					}
+				} else if (e.getType() != EntityType.DROPPED_ITEM && e.getType() != EntityType.ITEM_FRAME) {
 					a++;
+				}
 
 			}
 			if (a > min) {
-				pmanager.scan.add("Chunk(" + chunk.getX() + ", " + chunk.getZ() + "): " + a
-						+ " Entities");
+				pmanager.scan.add("Chunk(" + chunk.getX() + ", " + chunk.getZ() + "): " + a + " Entities");
 			}
 		}
 		pmanager.showPage(player, 1);

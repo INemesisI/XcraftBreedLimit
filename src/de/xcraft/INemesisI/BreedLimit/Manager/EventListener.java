@@ -26,7 +26,7 @@ public class EventListener extends XcraftEventListener {
 
 	public EventListener(XcraftBreedLimit plugin) {
 		super(plugin);
-		cManager = (ConfigManager) plugin.configManager;
+		cManager = plugin.getConfigManager();
 		List<Material> list = new ArrayList<Material>();
 		list.add(Material.SEEDS);
 		list.add(Material.MELON_SEEDS);
@@ -60,28 +60,29 @@ public class EventListener extends XcraftEventListener {
 
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-		if (event.getPlayer().hasPermission("breedlimit.exempt"))
+		if (event.getPlayer().hasPermission("breedlimit.exempt")) {
 			;// return;
+		}
 		if (event.isCancelled())
 			return;
 		Material item = event.getPlayer().getItemInHand().getType();
 		Entity entity = event.getRightClicked();
-		if (breedItemList.containsKey(entity.getType())
-				&& breedItemList.get(entity.getType()).contains(item)) {
+		if (breedItemList.containsKey(entity.getType()) && breedItemList.get(entity.getType()).contains(item)) {
 			if (entity instanceof Tameable && !((Tameable) entity).isTamed())
 				return;
 			event.setCancelled(checkBreeding(entity, event.getPlayer()));
-			System.out.println(event.isCancelled());
 		}
 	}
 
+	@EventHandler
 	public void onEntitySpawn(CreatureSpawnEvent event) {
-		if (event.getSpawnReason() == SpawnReason.EGG)
+		if (event.getSpawnReason() == SpawnReason.EGG) {
 			event.setCancelled(checkBreeding(event.getEntity(), null));
+		}
 	}
 
 	public boolean checkBreeding(Entity entity, Player player) {
-		//setup count
+		// setup count
 		Map<EntityType, Integer> count = new HashMap<EntityType, Integer>();
 		for (EntityType key : cManager.limits.keySet()) {
 			if (key.equals(entity.getType())) {
@@ -91,13 +92,13 @@ public class EventListener extends XcraftEventListener {
 		// count all entities
 		int r = cManager.radius;
 		Chunk c = entity.getLocation().getChunk();
-		for (int x = c.getX()-r ; x < c.getX()+r; x++) {
-			for (int z = c.getZ()-r ; z < c.getZ()+r; z++) {
+		for (int x = c.getX() - r; x < c.getX() + r; x++) {
+			for (int z = c.getZ() - r; z < c.getZ() + r; z++) {
 				for (Entity e : c.getWorld().getChunkAt(x, z).getEntities()) {
 					EntityType t = e.getType();
 					if (count.containsKey(t)) {
-						count.put(t, count.get(t));
-					}					
+						count.put(t, count.get(t) + 1);
+					}
 				}
 			}
 		}
@@ -105,17 +106,17 @@ public class EventListener extends XcraftEventListener {
 		for (EntityType key : count.keySet()) {
 			if (count.get(key) > cManager.limits.get(key)) {
 				if (player != null) {
-					PluginManager pManager = (PluginManager) plugin.pluginManager;
+					PluginManager pManager = (PluginManager) plugin.getPluginManager();
 					if (pManager.hasLicence(player.getName(), entity.getType())) {
 						pManager.removeLicence(player.getName(), entity.getType());
 						// Messenger.sendInfo(player, cManager.messages.get(entity), false);
 						return false;
 					}
-					plugin.messenger.sendInfo(player, cManager.getMessage(key), false);
+					plugin.getMessenger().sendInfo(player, cManager.getMessage(key), false);
 				}
 				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 }

@@ -9,9 +9,56 @@ import de.xcraft.INemesisI.BreedLimit.Manager.ConfigManager;
 import de.xcraft.INemesisI.BreedLimit.Manager.EventListener;
 import de.xcraft.INemesisI.BreedLimit.Manager.PluginManager;
 import de.xcraft.INemesisI.Library.XcraftPlugin;
+import de.xcraft.INemesisI.Library.Message.Messenger;
 
 public class XcraftBreedLimit extends XcraftPlugin {
-	public Economy economy;
+
+	private PluginManager pluginManager = null;
+	private ConfigManager configManager = null;
+	private CommandManager commandManager = null;
+	private EventListener eventListener = null;
+	private Messenger messenger = null;
+	private Economy economy;
+
+	@Override
+	protected void setup() {
+		this.messenger = Messenger.getInstance(this);
+		this.pluginManager = new PluginManager(this);
+		this.configManager = new ConfigManager(this);
+		this.eventListener = new EventListener(this);
+		this.commandManager = new CommandManager(this);
+		this.setupEconomy();
+		configManager.load();
+	}
+
+	@Override
+	public PluginManager getPluginManager() {
+		return pluginManager;
+	}
+
+	@Override
+	public ConfigManager getConfigManager() {
+		return configManager;
+	}
+
+	@Override
+	public CommandManager getCommandManager() {
+		return commandManager;
+	}
+
+	@Override
+	public EventListener getEventListener() {
+		return eventListener;
+	}
+
+	@Override
+	public Messenger getMessenger() {
+		return messenger;
+	}
+
+	public Economy getEconomy() {
+		return economy;
+	}
 
 	private boolean setupEconomy() {
 		RegisteredServiceProvider<Economy> economyProvider = this.getServer().getServicesManager()
@@ -20,15 +67,5 @@ public class XcraftBreedLimit extends XcraftPlugin {
 			economy = economyProvider.getProvider();
 		}
 		return economy != null;
-	}
-
-	@Override
-	protected void setup() {
-		this.pluginManager = new PluginManager(this);
-		this.configManager = new ConfigManager(this);
-		this.eventListener = new EventListener(this);
-		this.commandManager = new CommandManager(this);
-		this.setupEconomy();
-		configManager.load();
 	}
 }

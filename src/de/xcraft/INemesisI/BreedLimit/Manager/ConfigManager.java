@@ -28,13 +28,15 @@ public class ConfigManager extends XcraftConfigManager {
 		config = plugin.getConfig();
 		ConfigurationSection cs = config.getConfigurationSection("Breeding.Limits");
 		for (String key : cs.getKeys(false)) {
-			if (EntityType.valueOf(key) != null)
+			if (EntityType.valueOf(key) != null) {
 				limits.put(EntityType.valueOf(key), cs.getInt(key));
+			}
 		}
 		cs = config.getConfigurationSection("Breeding.Licence");
 		for (String key : cs.getKeys(false)) {
-			if (EntityType.valueOf(key) != null)
+			if (EntityType.valueOf(key) != null) {
 				licences.put(EntityType.valueOf(key), cs.getInt(key));
+			}
 		}
 		cs = config.getConfigurationSection("Breeding.Message");
 		for (String key : cs.getKeys(false)) {
@@ -54,6 +56,6 @@ public class ConfigManager extends XcraftConfigManager {
 		if (messages.containsKey(type))
 			return messages.get(type);
 		else
-			return messages.get("default");
+			return messages.get(EntityType.UNKNOWN);
 	}
 }

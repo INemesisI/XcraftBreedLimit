@@ -15,7 +15,8 @@ import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 public class PluginManager extends XcraftPluginManager {
 	public final List<String> scan = new ArrayList<String>();
 	private final Map<String, List<EntityType>> licences = new HashMap<String, List<EntityType>>();
-	//private final Map<EntityType, Integer> prices = new HashMap<EntityType, Integer>();
+
+	// private final Map<EntityType, Integer> prices = new HashMap<EntityType, Integer>();
 
 	public PluginManager(XcraftBreedLimit plugin) {
 		super(plugin);
@@ -39,14 +40,17 @@ public class PluginManager extends XcraftPluginManager {
 	}
 
 	public void showPage(Player player, int page) {
-		plugin.messenger.sendInfo(player, ChatColor.YELLOW + "Scan Data page" + ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + page + ChatColor.DARK_GRAY
-				+ "/" + (scan.size() / 10 + 1) + "]", true);
+		plugin.getMessenger().sendInfo(
+				player,
+				ChatColor.YELLOW + "Scan Data page" + ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + page + ChatColor.DARK_GRAY + "/"
+						+ (scan.size() / 10 + 1) + "]", true);
 		page = page - 1;
 		for (int i = (page * 10); i < (page * 10) + 10; i++) {
 			if (i < scan.size()) {
-				plugin.messenger.sendInfo(player, ChatColor.GOLD + "" + (i + 1) + ChatColor.WHITE + ": " + ChatColor.AQUA + scan.get(i), true);
-			} else
+				plugin.getMessenger().sendInfo(player, ChatColor.GOLD + "" + (i + 1) + ChatColor.WHITE + ": " + ChatColor.AQUA + scan.get(i), true);
+			} else {
 				break;
+			}
 		}
 	}
 

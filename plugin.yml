@@ -1,9 +1,11 @@
 name: XcraftBreedLimit
-version: 1.2.3
+version: 1.2.4
 author: INemesisI
 
 main: de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit
 load: POSTWORLD
+
+depend: [XcraftLibrary]
 softdepend: [Vault]
 
 commands:

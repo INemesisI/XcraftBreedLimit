@@ -1,4 +1,4 @@
-package de.xcraft.INemesisI.BreedLimit.Command;
+package de.xcraft.INemesisI.BreedLimit.Command.Scan;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,7 +10,7 @@ import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 public class PageCommand extends XcraftCommand {
 
 	public PageCommand() {
-		super("breedlimit", "page", "p.*", "<page>", "Shows page <page>", "XcraftBreedLimit.Scan");
+		super("breedlimit", "page", "p.*", "<#>", "Shows page <page>", "XcraftBreedLimit.Scan");
 	}
 
 	@Override
