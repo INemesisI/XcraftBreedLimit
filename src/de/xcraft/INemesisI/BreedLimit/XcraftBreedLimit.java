@@ -11,6 +11,17 @@ import de.xcraft.INemesisI.BreedLimit.Manager.PluginManager;
 import de.xcraft.INemesisI.Library.XcraftPlugin;
 import de.xcraft.INemesisI.Library.Message.Messenger;
 
+//@formatter:off
+/***
+* @author INemesisI
+*     by _____   __                         _      ____
+*       /  _/ | / /__  ____ ___  ___  _____(_)____/  _/ 
+*       / //  |/ / _ \/ __ `__ \/ _ \/ ___/ / ___// /  
+*     _/ // /|  /  __/ / / / / /  __(__  ) (__  )/ /   
+*    /___/_/ |_/\___/_/ /_/ /_/\___/____/_/____/___/                                              
+*/ 
+//@formatter:on
+
 public class XcraftBreedLimit extends XcraftPlugin {
 
 	private PluginManager pluginManager = null;

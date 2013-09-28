@@ -1,7 +1,6 @@
 package de.xcraft.INemesisI.BreedLimit.Manager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,9 +13,7 @@ import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 
 public class PluginManager extends XcraftPluginManager {
 	public final List<String> scan = new ArrayList<String>();
-	private final Map<String, List<EntityType>> licences = new HashMap<String, List<EntityType>>();
-
-	// private final Map<EntityType, Integer> prices = new HashMap<EntityType, Integer>();
+	private Map<String, Map<EntityType, Integer>> licences;
 
 	public PluginManager(XcraftBreedLimit plugin) {
 		super(plugin);
@@ -27,16 +24,16 @@ public class PluginManager extends XcraftPluginManager {
 		return (XcraftBreedLimit) plugin;
 	}
 
-	public void addLicence(String player, EntityType type) {
-		licences.get(type).add(type);
+	public Map<String, Map<EntityType, Integer>> getLicences() {
+		return licences;
 	}
 
-	public boolean removeLicence(String player, EntityType type) {
-		return licences.get(player).remove(type);
+	public void setLicences(Map<String, Map<EntityType, Integer>> licences) {
+		this.licences = licences;
 	}
 
-	public boolean hasLicence(String player, EntityType type) {
-		return licences.containsKey(player) && licences.get(player).contains(type);
+	public Map<EntityType, Integer> getLicence(String player) {
+		return licences.get(player);
 	}
 
 	public void showPage(Player player, int page) {
@@ -53,5 +50,4 @@ public class PluginManager extends XcraftPluginManager {
 			}
 		}
 	}
-
 }

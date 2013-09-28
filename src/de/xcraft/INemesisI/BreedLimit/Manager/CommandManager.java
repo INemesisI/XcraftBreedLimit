@@ -1,10 +1,7 @@
 package de.xcraft.INemesisI.BreedLimit.Manager;
 
-import de.xcraft.INemesisI.BreedLimit.Command.AreaUsage;
-import de.xcraft.INemesisI.BreedLimit.Command.NumberUsage;
 import de.xcraft.INemesisI.BreedLimit.Command.TypeUsage;
 import de.xcraft.INemesisI.BreedLimit.Command.Licence.BuyLicenceCommand;
-import de.xcraft.INemesisI.BreedLimit.Command.Licence.GiveLicenceCommand;
 import de.xcraft.INemesisI.BreedLimit.Command.Licence.ListLicencesCommand;
 import de.xcraft.INemesisI.BreedLimit.Command.Scan.PageCommand;
 import de.xcraft.INemesisI.BreedLimit.Command.Scan.ScanCommand;
@@ -27,11 +24,8 @@ public class CommandManager extends XcraftCommandManager {
 		registerCommand(new TpCommand());
 		registerCommand(new PageCommand());
 		registerCommand(new ListLicencesCommand());
-		registerCommand(new GiveLicenceCommand());
 		registerCommand(new BuyLicenceCommand());
 
-		registerUsage(new AreaUsage());
-		registerUsage(new NumberUsage());
 		registerUsage(new TypeUsage());
 
 	}

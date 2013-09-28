@@ -13,59 +13,77 @@ import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 public class ScanCommand extends XcraftCommand {
 
 	public ScanCommand() {
-		super("breedlimit", "scan", "s.*", "<#> [TYPE] [AREA]", "Scans for chunks with # entities", "XcraftBreedLimit.Scan");
+		super("breedlimit", "scan", "s.*", "<KEY> ...", "Scans for chunks with # entities", "XcraftBreedLimit.Scan");
 	}
 
 	@Override
 	public boolean execute(XcraftPluginManager manager, CommandSender sender, String[] args) {
 		if (!(sender instanceof Player))
 			return true;
-		if (!args[0].matches("\\d*"))
-			return false;
-		int min = Integer.parseInt(args[0]);
+		int radius = -1;
+		int limit = -1;
 		EntityType type = null;
-		int area = -1;
-		if (args.length > 1)
-			if (args[1].matches("\\d*")) {
-				area = Integer.parseInt(args[2]);
-			} else {
-				type = EntityType.valueOf(args[1]);
+		for (String arg : args) {
+			if (arg.startsWith("r:")) {
+				String r = arg.replace("r:", "");
+				if (r.matches("\\d.*")) {
+					radius = Integer.parseInt(r) / 16;
+				} else
+					return false;
+			} else if (arg.startsWith("l:")) {
+				String l = arg.replace("l:", "");
+				if (l.matches("\\d.*")) {
+					limit = Integer.parseInt(l);
+				} else
+					return false;
+			} else if (arg.startsWith("t:")) {
+				type = EntityType.valueOf(arg.replace("t:", ""));
 			}
-		if (args.length > 2) {
-			if (!args[2].matches("\\d*"))
-				return false;
-			area = Integer.parseInt(args[2]);
 		}
-		boolean etype = type != null;
 		PluginManager pmanager = (PluginManager) manager;
 		Player player = (Player) sender;
 		pmanager.scan.clear();
-		Chunk pc = player.getLocation().getChunk();
-		for (Chunk chunk : player.getWorld().getLoadedChunks()) {
-			int a = 0;
-			if (area != -1) {
-				if (chunk.getX() < pc.getX() - area || chunk.getX() > pc.getX() + area || chunk.getZ() < pc.getZ() - area
-						|| chunk.getZ() > pc.getZ() + area) {
-					continue;
-				}
+		if (radius == -1) {
+			for (Chunk chunk : player.getWorld().getLoadedChunks()) {
+				String scan = scanChunk(chunk, type, limit);
+				if (scan != null)
+					pmanager.scan.add(scan);
 			}
-			Entity[] list = chunk.getEntities();
-			for (int i = 0; i < list.length; i++) {
-				Entity e = list[i];
-				if (etype) {
-					if (e.getType().equals(type)) {
-						a++;
+			pmanager.showPage(player, 1);
+			return true;
+		} else {
+			Chunk pc = player.getLocation().getChunk();
+			for (int x = pc.getX() - radius; x < pc.getX() + radius; x++) {
+				for (int z = pc.getZ() - radius; z < pc.getZ() + radius; z++) {
+					Chunk chunk = player.getWorld().getChunkAt(x, z);
+					if (!chunk.isLoaded()) {
+						chunk.load(false);
 					}
-				} else if (e.getType() != EntityType.DROPPED_ITEM && e.getType() != EntityType.ITEM_FRAME) {
-					a++;
+					String scan = scanChunk(chunk, type, limit);
+					if (scan != null)
+						pmanager.scan.add(scan);
+					chunk.unload(false, false);
 				}
-
-			}
-			if (a > min) {
-				pmanager.scan.add("Chunk(" + chunk.getX() + ", " + chunk.getZ() + "): " + a + " Entities");
 			}
 		}
 		pmanager.showPage(player, 1);
 		return true;
+	}
+
+	public String scanChunk(Chunk chunk, EntityType type, int limit) {
+		int a = 0;
+		for (Entity e : chunk.getEntities()) {
+			if (type != null) {
+				if (e.getType().equals(type)) {
+					a++;
+				}
+			} else if (e.getType() != EntityType.DROPPED_ITEM && e.getType() != EntityType.ITEM_FRAME) {
+				a++;
+			}
+		}
+		if (a > 0 && (limit == -1 || a >= limit)) {
+			return "Chunk(" + chunk.getX() + ", " + chunk.getZ() + "): " + a + " Entities";
+		} else
+			return null;
 	}
 }

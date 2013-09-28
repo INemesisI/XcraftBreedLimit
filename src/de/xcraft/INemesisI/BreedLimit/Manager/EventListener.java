@@ -67,7 +67,8 @@ public class EventListener extends XcraftEventListener {
 			return;
 		Material item = event.getPlayer().getItemInHand().getType();
 		Entity entity = event.getRightClicked();
-		if (breedItemList.containsKey(entity.getType()) && breedItemList.get(entity.getType()).contains(item)) {
+		if (breedItemList.containsKey(entity.getType())
+				&& breedItemList.get(entity.getType()).contains(item)) {
 			if (entity instanceof Tameable && !((Tameable) entity).isTamed())
 				return;
 			event.setCancelled(checkBreeding(entity, event.getPlayer()));
@@ -107,8 +108,10 @@ public class EventListener extends XcraftEventListener {
 			if (count.get(key) > cManager.limits.get(key)) {
 				if (player != null) {
 					PluginManager pManager = (PluginManager) plugin.getPluginManager();
-					if (pManager.hasLicence(player.getName(), entity.getType())) {
-						pManager.removeLicence(player.getName(), entity.getType());
+					if (pManager.getLicences().containsKey(player.getName())
+							&& pManager.getLicence(player.getName()).containsKey(entity.getType())) {
+						pManager.getLicence(player.getName()).put(key,
+								pManager.getLicence(player.getName()).get(key) - 1);
 						// Messenger.sendInfo(player, cManager.messages.get(entity), false);
 						return false;
 					}
