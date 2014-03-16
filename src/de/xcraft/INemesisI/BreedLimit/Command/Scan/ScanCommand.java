@@ -8,18 +8,20 @@ import org.bukkit.entity.Player;
 
 import de.xcraft.INemesisI.BreedLimit.Manager.PluginManager;
 import de.xcraft.INemesisI.Library.Command.XcraftCommand;
+import de.xcraft.INemesisI.Library.Manager.XcraftCommandManager;
 import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 
 public class ScanCommand extends XcraftCommand {
 
-	public ScanCommand() {
-		super("breedlimit", "scan", "s.*", "<KEY> ...", "Scans for chunks with # entities", "XcraftBreedLimit.Scan");
+	public ScanCommand(XcraftCommandManager cManager, String command, String name, String pattern, String usage, String desc, String permission) {
+		super(cManager, command, name, pattern, usage, desc, permission);
 	}
 
 	@Override
 	public boolean execute(XcraftPluginManager manager, CommandSender sender, String[] args) {
 		if (!(sender instanceof Player))
 			return true;
+		boolean loaded;
 		int radius = -1;
 		int limit = -1;
 		EntityType type = null;
@@ -58,11 +60,14 @@ public class ScanCommand extends XcraftCommand {
 					Chunk chunk = player.getWorld().getChunkAt(x, z);
 					if (!chunk.isLoaded()) {
 						chunk.load(false);
-					}
+						loaded = false;
+					} else
+						loaded = true;
 					String scan = scanChunk(chunk, type, limit);
 					if (scan != null)
 						pmanager.scan.add(scan);
-					chunk.unload(false, false);
+					if (!loaded)
+						chunk.unload(false, false);
 				}
 			}
 		}

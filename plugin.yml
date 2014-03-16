@@ -1,6 +1,7 @@
 name: XcraftBreedLimit
-version: 1.3
+version: 1.3.2
 author: INemesisI
+description: Requires XcraftLibrary v1.6.0
 
 main: de.xcraft.INemesisI.BreedLimit.XcraftBreedLimit
 load: POSTWORLD

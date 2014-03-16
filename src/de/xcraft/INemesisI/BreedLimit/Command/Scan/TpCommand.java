@@ -7,12 +7,13 @@ import org.bukkit.entity.Player;
 
 import de.xcraft.INemesisI.BreedLimit.Manager.PluginManager;
 import de.xcraft.INemesisI.Library.Command.XcraftCommand;
+import de.xcraft.INemesisI.Library.Manager.XcraftCommandManager;
 import de.xcraft.INemesisI.Library.Manager.XcraftPluginManager;
 
 public class TpCommand extends XcraftCommand {
 
-	public TpCommand() {
-		super("breedlimit", "tp", "t.*", "<#>", "Teleports you to entry <#>", "XcraftBreedLimit.Scan");
+	public TpCommand(XcraftCommandManager cManager, String command, String name, String pattern, String usage, String desc, String permission) {
+		super(cManager, command, name, pattern, usage, desc, permission);
 	}
 
 	@Override

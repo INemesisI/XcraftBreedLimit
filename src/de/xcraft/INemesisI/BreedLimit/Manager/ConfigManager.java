@@ -1,6 +1,7 @@
 package de.xcraft.INemesisI.BreedLimit.Manager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,6 +68,11 @@ public class ConfigManager extends XcraftConfigManager {
 		PluginManager pManager = (PluginManager) plugin.getPluginManager();
 		for (String player : pManager.getLicences().keySet()) {
 			data.set(player, pManager.getLicence(player));
+		}
+		try {
+			data.save(dataFile);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

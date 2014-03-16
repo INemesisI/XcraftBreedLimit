@@ -28,23 +28,29 @@ public class EventListener extends XcraftEventListener {
 		super(plugin);
 		cManager = plugin.getConfigManager();
 		List<Material> list = new ArrayList<Material>();
+
 		list.add(Material.SEEDS);
 		list.add(Material.MELON_SEEDS);
 		list.add(Material.PUMPKIN_SEEDS);
 		list.add(Material.NETHER_WARTS);
 		breedItemList.put(EntityType.CHICKEN, new ArrayList<Material>(list));
+
 		list.clear();
 		list.add(Material.WHEAT);
 		breedItemList.put(EntityType.COW, new ArrayList<Material>(list));
+
 		list.clear();
 		list.add(Material.RAW_FISH);
 		breedItemList.put(EntityType.OCELOT, new ArrayList<Material>(list));
+
 		list.clear();
 		list.add(Material.CARROT);
 		breedItemList.put(EntityType.PIG, new ArrayList<Material>(list));
+
 		list.clear();
 		list.add(Material.WHEAT);
 		breedItemList.put(EntityType.SHEEP, new ArrayList<Material>(list));
+
 		list.add(Material.RAW_BEEF);
 		list.add(Material.COOKED_BEEF);
 		list.add(Material.COOKED_CHICKEN);
@@ -52,6 +58,7 @@ public class EventListener extends XcraftEventListener {
 		list.add(Material.ROTTEN_FLESH);
 		list.add(Material.PORK);
 		breedItemList.put(EntityType.WOLF, new ArrayList<Material>(list));
+
 		list.clear();
 		list.add(Material.GOLDEN_APPLE);
 		list.add(Material.GOLDEN_CARROT);
