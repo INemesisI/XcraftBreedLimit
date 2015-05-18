@@ -30,14 +30,15 @@ public class EventListener extends XcraftEventListener {
 		List<Material> list = new ArrayList<Material>();
 
 		list.add(Material.SEEDS);
-		list.add(Material.MELON_SEEDS);
-		list.add(Material.PUMPKIN_SEEDS);
-		list.add(Material.NETHER_WARTS);
 		breedItemList.put(EntityType.CHICKEN, new ArrayList<Material>(list));
 
 		list.clear();
 		list.add(Material.WHEAT);
 		breedItemList.put(EntityType.COW, new ArrayList<Material>(list));
+
+		breedItemList.put(EntityType.MUSHROOM_COW, new ArrayList<Material>(list));
+		
+		breedItemList.put(EntityType.SHEEP, new ArrayList<Material>(list));
 
 		list.clear();
 		list.add(Material.RAW_FISH);
@@ -47,16 +48,19 @@ public class EventListener extends XcraftEventListener {
 		list.add(Material.CARROT);
 		breedItemList.put(EntityType.PIG, new ArrayList<Material>(list));
 
+		list.add(Material.GOLDEN_CARROT);
+		list.add(Material.YELLOW_FLOWER);
+		
 		list.clear();
-		list.add(Material.WHEAT);
-		breedItemList.put(EntityType.SHEEP, new ArrayList<Material>(list));
-
+		list.add(Material.PORK);
+		list.add(Material.GRILLED_PORK);
 		list.add(Material.RAW_BEEF);
 		list.add(Material.COOKED_BEEF);
-		list.add(Material.COOKED_CHICKEN);
 		list.add(Material.RAW_CHICKEN);
+		list.add(Material.COOKED_CHICKEN);
 		list.add(Material.ROTTEN_FLESH);
-		list.add(Material.PORK);
+		list.add(Material.MUTTON);
+		list.add(Material.COOKED_MUTTON);
 		breedItemList.put(EntityType.WOLF, new ArrayList<Material>(list));
 
 		list.clear();

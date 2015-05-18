@@ -60,7 +60,7 @@ public class ConfigManager extends XcraftConfigManager {
 			licences.put(player, list);
 		}
 		((PluginManager) plugin.getPluginManager()).setLicences(licences);
-		this.radius = config.getInt("Bredding.Radius", 2);
+		this.radius = config.getInt("Breeding.Radius", 2);
 	}
 
 	@Override
